@@ -1,5 +1,4 @@
 import pandas as pd
-
 # Steps:
 # 1. Filter the file - return only the lines that contain the category
 # 2. Slice the string - return a dictionary with the values
@@ -18,12 +17,15 @@ def contains_category(line):
 
 
 def filter_file(filePath):
-    filteredTextFile = open("./FilesToConvert/new_data.txt", "w")
+    filteredTextFile = open("./FilesToConvert/new_data.txt", "w", encoding="utf-8")
 
-    with open(filePath, "r") as f:
+    with open(filePath, "r", encoding="utf-8") as f:
         lines = f.readlines()
         for line in lines:
             if contains_category(line):
+                # ---- replace ä with ae ----
+                if "ä" in line:
+                    line = line.replace("ä", "ae")
                 filteredTextFile.write(line)
                 # append raw_line_data
                 raw_data.append(line)
@@ -114,7 +116,9 @@ values = pd.DataFrame(temp)
 values["Anzahl"] = values["Anzahl"].astype(int)
 
 # ------------------filter products and amount ------------------ #
-f_df = get_product_amount(values, "Krap")
+# Dinkel", "Mohn","Semmel", "Käsestangerl", "Pizza", "Kornspitz", "Salzstangerl", "Kipferl", "Krapfen", "Graham
+
+f_df = get_product_amount(values, "Kaese")
 filtered = pd.DataFrame(f_df)
 sum_filtered = sum(filtered["Filtered_Amount"])
 
@@ -123,4 +127,4 @@ sum_row = pd.DataFrame([{"Sum": sum_filtered}])
 filtered = pd.concat([filtered, sum_row])
 
 # to csv
-filtered.to_csv("./FilesToConvert/filtered.csv", index=False)
+filtered.to_csv("./FilesToConvert/filtered.csv", index=False, encoding="utf-8")
