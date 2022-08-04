@@ -1,0 +1,21 @@
+1a 5 Dinkelweckerln
+1b 6 Salzstangerln
+1c 6 Semmeln
+1d 1 Käsestangerl
+1e 5 Semmeln
+2b 5 Käsestangerln
+2d 1 Mohnweckerl
+2e 6 Kipferln
+2f 4 Dinkelweckerln
+3a 6 Mohnweckerln
+3b 5 Mohnweckerln
+3c 6 Mohnweckerln
+3d 6 Mohnweckerln
+3e 4 Kornspitz
+      2 Mohnweckerln
+4a 5 Mohnweckerln
+4b 6 Semmeln
+Liebe Grüße und einen schönen Tag
+Roswitha
+Hallo Wolfi!
+Bitte für morgen
