@@ -6,7 +6,7 @@ import pandas as pd
 
 
 raw_data = [] # stores the raw data from text file, is later used to compare the result with the original data
-categories = ["Dinkel", "Mohn","Semmel", "Käsestangerl", "Pizza", "Kornspitz", "Salzstangerl", "Kipferl", "Krapfen", "Graham" ]
+categories = ["Dinkel", "Mohn","Semmel", "Käsestangerl", "Pizza", "Pizzen", "Kornspitz", "Salzstangerl", "Kipferl", "Krapfen", "Graham" ]
 
 def contains_category(line):
     for category in categories:
@@ -45,7 +45,6 @@ def slice_string(string):
     else:
         # --- correct format check ---
         formatted_string = string.replace(" ", "")
-
         # --- check if the strings number is higher than 9
         check_string = formatted_string[2:4]
         if check_string.isdigit():
@@ -84,41 +83,48 @@ def create_dataframe(file_path):
     return data
 
 
-def get_product_amount(data, search_product):
+def get_product_amount(data, substring):
 
+    global raw_data
     productName = []
     values = []
+    raw_data_to_display = []
+    idx = 0
 
     for index, row in data.iterrows():
-        temp = row["Produkt"]
-        if search_product in temp:
-            productName.append(temp)
+        temp_product = row["Produkt"]
+        if substring in temp_product:
+            productName.append(temp_product)
             values.append(row["Anzahl"])
+            raw_data_to_display.append(raw_data[index])
 
             # check if the product is already in the list
-            for row in raw_data:
-                if not search_product in row:
-                    raw_data.remove(row)
+            # for row in raw_data:
+            #     if not substring in row:
+            #         raw_data.remove(row)
+
+    raw_data = raw_data_to_display
     filtered_data = {
         "Filtered_Product": pd.Series(productName),
         "Filtered_Amount": pd.Series(values),
         "Raw_Data": pd.Series(raw_data)
     }
+
     return filtered_data
 
 
 # ------------------filter txt file ------------------ #
 filter_file("./FilesToConvert/waldschuleBestellung.txt")
-
+print(raw_data)
 # ------------------create dataframe ------------------ #
 temp = create_dataframe("./FilesToConvert/new_data.txt")
 values = pd.DataFrame(temp)
 values["Anzahl"] = values["Anzahl"].astype(int)
 
 # ------------------filter products and amount ------------------ #
-# Dinkel", "Mohn","Semmel", "Käsestangerl", "Pizza", "Kornspitz", "Salzstangerl", "Kipferl", "Krapfen", "Graham
+# Dinkel", "Mohn","Semmel", "Käsestangerl", "Pizza", "Pizzen", "Kornspitz", "Salzstangerl", "Kipferl", "Krapfen", "Graham
 
-f_df = get_product_amount(values, "Kaese")
+f_df = get_product_amount(values, "Pizz")
 filtered = pd.DataFrame(f_df)
 sum_filtered = sum(filtered["Filtered_Amount"])
 
