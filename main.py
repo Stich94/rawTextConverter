@@ -32,8 +32,9 @@ def filter_file(filePath):
     filteredTextFile.close()
 
 
-def slice_string(string):
 
+def slice_string(string):
+    """slice strings into a dictionary"""
     dict = {"classroom": "", "amount": 0, "product": ""}
     # if string starts with whitespace, we have to add the values differently
     # --- whitespace check ---
@@ -128,7 +129,7 @@ f_df = get_product_amount(values, "Pizz")
 filtered = pd.DataFrame(f_df)
 sum_filtered = sum(filtered["Filtered_Amount"])
 
-# ------------------Add Sum into Dataframe ------------------ #
+# ------------------Add Sum Column into Dataframe ------------------ #
 sum_row = pd.DataFrame([{"Sum": sum_filtered}])
 filtered = pd.concat([filtered, sum_row])
 
